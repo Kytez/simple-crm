@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Add User</h2>
+<mat-dialog-content>
+
+    <div class="input-container">
+    <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input [(ngModel)]="user.firstName" matInput>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input [(ngModel)]="user.lastName" matInput>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width">
+        <mat-label>Birth Date</mat-label>
+        <input [(ngModel)]="birthDate" matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Street + House No.</mat-label>
+        <input [(ngModel)]="user.street" matInput>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Zip code </mat-label>
+        <input [(ngModel)]="user.zipCode" matInput>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>City</mat-label>
+        <input [(ngModel)]="user.city" matInput>
+      </mat-form-field>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button>Cancel</button>
+  <button (click)="saveUser()" mat-button cdkFocusInitial>Save</button>
+</mat-dialog-actions>
