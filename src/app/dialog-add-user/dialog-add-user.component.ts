@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import {
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
@@ -37,12 +39,15 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 export class DialogAddUserComponent {
   user = new User();
   birthDate: any;
+  loading = false;
 
-  constructor(private firestoreService: FirestoreService) {}
+  constructor(private firestoreService: FirestoreService, public dialogRef: MatDialogRef<DialogAddUserComponent>) {}
 
   saveUser() {
+    this.loading = true;
     this.user.birthDate = this.birthDate.getTime();    
-
     this.firestoreService.addUser(this.user.toJSON());
+    this.dialogRef.close();
+    this.loading = false;    
   }
 }

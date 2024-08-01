@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, addDoc, doc, getDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  addDoc,
+  doc,
+  getDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirestoreService {
+  userCollection = collection(this.firestore, 'users');
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore) {}
 
   addUser(userData: any) {
-    addDoc(collection(this.firestore, 'users'), userData);
+    addDoc(this.userCollection, userData);
   }
+
 }

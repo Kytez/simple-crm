@@ -1,4 +1,6 @@
-<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+@if (loading) {
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
 
 <h2 mat-dialog-title>Add User</h2>
 <mat-dialog-content>
@@ -40,5 +42,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button>Cancel</button>
-  <button (click)="saveUser()" mat-button cdkFocusInitial>Save</button>
+  <button [disabled]="loading" (click)="saveUser()" mat-button cdkFocusInitial>Save</button>
 </mat-dialog-actions>
