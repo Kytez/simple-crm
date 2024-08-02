@@ -7,18 +7,50 @@ import {
   doc,
   getDoc,
   updateDoc,
+  onSnapshot,
+  getDocs,
 } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirestoreService {
   userCollection = collection(this.firestore, 'users');
+  allUsers: any[] = [];
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) {
+    this.getUsers();
+  }
 
   addUser(userData: any) {
     addDoc(this.userCollection, userData);
   }
 
+  getUsers() {
+    // const users = getDocs(this.userCollection);
+    // (await users).forEach((user) => {
+    //   this.allUsers.push(user.data());
+    // });
+
+    collectionData(this.userCollection).subscribe((userData) => {
+      this.allUsers = userData;
+
+      this.transformBirthDate();
+    });
+  }
+
+
+
+  transformBirthDate() {
+    this.allUsers.forEach((user) => {
+      let date = new Date(user['birthDate']);
+
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+
+      user['birthDate'] = `${day}.${month}.${year}`;
+    })
+  }
 }

@@ -5,19 +5,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
-import { MatDatepickerModule, MatCalendarCellClassFunction } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { User } from '../../models/user.class';
 import {MatCardModule} from '@angular/material/card';
 import { FirestoreService } from '../services/firestore.service';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  addDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-user',
@@ -29,23 +20,12 @@ import {
 export class UserComponent {
 
   user = new User();
-  allUsers: any[] = [];
 
-  constructor(public dialog: MatDialog, private firestoreService: FirestoreService, private firestore: Firestore) {
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService) {
   }
-
-  ngOnInit() {
-    this.getUsers();
-  }
-
-  getUsers() {
-    collectionData(this.firestoreService.userCollection).subscribe((users: any) => {
-      this.allUsers = users;      
-    });    
-  }
-
+  
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
   }
-
+  
 }
