@@ -10,7 +10,6 @@ import {
   onSnapshot,
   getDocs,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +17,8 @@ import { Observable } from 'rxjs';
 export class FirestoreService {
   userCollection = collection(this.firestore, 'users');
   allUsers: any[] = [];
+
+  unsubUserList: any;
 
   constructor(private firestore: Firestore) {
     this.getUsers();
@@ -33,11 +34,23 @@ export class FirestoreService {
     //   this.allUsers.push(user.data());
     // });
 
-    collectionData(this.userCollection).subscribe((userData) => {
-      this.allUsers = userData;
+    // collectionData(this.userCollection).subscribe((userData) => {
+    //   this.allUsers = userData;
 
+    // });
+
+    this.unsubUserList = onSnapshot(this.userCollection, (userList) => {
+      this.allUsers = [];
+      userList.forEach(user => {
+        this.allUsers.push(user.data());       
+      });
       this.transformBirthDate();
     });
+
+  }
+
+  ngOnDestroy() {
+    this.unsubUserList();
   }
 
 
