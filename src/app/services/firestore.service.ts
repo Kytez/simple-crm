@@ -25,7 +25,12 @@ export class FirestoreService {
   }
 
   addUser(userData: any) {
-    addDoc(this.userCollection, userData);
+    addDoc(this.userCollection, userData)
+    .then((docRef) => {
+      updateDoc(doc(this.userCollection, docRef.id), {
+        userId: docRef.id
+      });
+    });
   }
 
   getUsers() {
@@ -36,7 +41,6 @@ export class FirestoreService {
 
     // collectionData(this.userCollection).subscribe((userData) => {
     //   this.allUsers = userData;
-
     // });
 
     this.unsubUserList = onSnapshot(this.userCollection, (userList) => {
@@ -45,8 +49,9 @@ export class FirestoreService {
         this.allUsers.push(user.data());       
       });
       this.transformBirthDate();
+      console.log(this.allUsers);
     });
-
+    
   }
 
   ngOnDestroy() {

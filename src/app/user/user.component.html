@@ -7,7 +7,7 @@
         <th>Birth Date</th>
       </tr>
       @for (user of this.firestoreService.allUsers; track $index) {
-      <tr>
+      <tr (click)="navigateToUser(user.userId)" style="cursor: pointer;">
         <td>{{ user.firstName }} {{ user.lastName }}</td>
         <td>{{ user.street }}</td>
         <td>{{ user.birthDate }}</td>

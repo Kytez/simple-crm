@@ -50,4 +50,5 @@ export class DialogAddUserComponent {
     this.dialogRef.close();
     this.loading = false;    
   }
+
 }
